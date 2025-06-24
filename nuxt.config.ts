@@ -4,9 +4,9 @@ export default defineNuxtConfig({
   // Vuetify CSS'ini dahil et
   css: [
     'vuetify/lib/styles/main.sass',
-    '@mdi/font/css/materialdesignicons.min.css',
-  ],
-  
+  //   '@mdi/font/css/materialdesignicons.min.css',
+   ],
+    
   // Vite yapılandırması
   vite: {
     define: {

@@ -1,3 +1,12 @@
 // Vuetify değişkenlerini özelleştir
-$body-font-family: 'Roboto', sans-serif;
+// $body-font-family: 'Roboto', sans-serif;
+// $headings-font-family: 'Roboto', sans-serif;
+
+// variables.scss
+$body-font-family:  'Roboto', sans-serif;
+$font-size-root: 16px;
 $headings-font-family: 'Roboto', sans-serif;
+
+// Ana CSS dosyanda
+// @import './variables.scss';
+// @import 'vuetify/styles';
