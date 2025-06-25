@@ -1,27 +1,41 @@
 <template>
   <div>
     <h2>Kullanıcılar</h2>
-      
-    <v-data-table
-        :headers="[
-          { title: 'ID', key: 'id' },
-          { title: 'Ad', key: 'name' },
-          { title: 'Email', key: 'email' },
-          { title: 'Doğrulama', key: 'email_verified_at' },
-          { title: 'Kayıt Tarihi', key: 'created_at' },
-          { title: 'İşlemler', key: 'actions', sortable: false }
-        ]"
+    <div class="d-flex justify-end">
+      <v-btn color="primary" size="small" @click="refresh2">Yenile</v-btn>
+    </div>
+    <div>
+
+      <v-data-table
+      :headers="[
+        { title: 'ID', key: 'id' },
+        { title: 'Ad', key: 'name' },
+        { title: 'Email', key: 'email' },
+        { title: 'Doğrulama', key: 'email_verified_at' },
+        { title: 'Kayıt Tarihi', key: 'created_at' },
+        { title: 'İşlemler', key: 'actions', sortable: false }
+      ]"
         :items="users"
         class="mt-8"
-      >
+        >
         <template #item.created_at="{ item }">
           {{ new Date(item.created_at).toLocaleDateString('tr-TR') }}
         </template>
         <template #item.actions="{ item }">
           <v-btn color="red" @click="deleteUser(item.id)" size="small">Sil</v-btn>
         </template>
-    </v-data-table>
+      </v-data-table>
+    </div>
 
+
+    <div v-for="user in users" :key="user.id" class="user-card">
+      <pre>{{ JSON.stringify(user, null, 2) }}</pre>
+      <!-- <h3>{{ user.name }}</h3>
+      <p>{{ user.email }}</p>
+      <p>{{ user.email_verified_at }}</p> -->
+      <!-- <p>Kayıt: {{ new Date(user.created_at).toLocaleDateString('tr-TR') }}</p> -->
+      <!-- <v-btn @click="deleteUser(user.id)">Sil</v-btn> -->
+    </div>
 
     <div v-if="pending">Yükleniyor...</div>
 
@@ -30,14 +44,7 @@
     </div>
 
     <div v-else>
-      <div v-for="user in users" :key="user.id" class="user-card">
-        <pre>{{ JSON.stringify(user, null, 2) }}</pre>
-        <!-- <h3>{{ user.name }}</h3>
-        <p>{{ user.email }}</p>
-        <p>{{ user.email_verified_at }}</p> -->
-        <!-- <p>Kayıt: {{ new Date(user.created_at).toLocaleDateString('tr-TR') }}</p> -->
-        <!-- <v-btn @click="deleteUser(user.id)">Sil</v-btn> -->
-      </div>
+      <p>Toplam {{ users.length }} kullanıcı bulundu.</p>
     </div>
   </div>
 </template>
@@ -46,6 +53,10 @@
 const { getUsers, deleteUser: removeUser } = useUsers()
 
 const { data: users, pending, error, refresh } = await useAsyncData('users', getUsers)
+
+const refresh2 = async () => {
+  await refresh()
+}
 
 const deleteUser = async (id: number) => {
   

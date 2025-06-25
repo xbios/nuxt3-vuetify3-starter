@@ -72,8 +72,8 @@ const menuItems = [
     { title: 'Ana Sayfa', icon: 'mdi-home', to: '/', value: 'home' },
     { title: 'Hakkında', icon: 'mdi-information', to: '/about', value: 'about' },
     { title: 'İletişim', icon: 'mdi-email', to: '/contact', value: 'contact' },
-    { title: 'Help', icon: 'mdi-help', to: '/help', value: 'help' },
-    // { title: 'Galeri', icon: 'mdi-image', to: '/gallery', value: 'gallery' }
+    { title: 'Yardım', icon: 'mdi-help', to: '/help', value: 'help' },
+    { title: 'Kullanıcılar', icon: 'mdi-account', to: '/users', value: 'users' }
 ]
 
 const isDark = computed(() => {
