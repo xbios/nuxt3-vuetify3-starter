@@ -22,7 +22,7 @@
           {{ new Date(item.created_at).toLocaleDateString('tr-TR') }}
         </template>
         <template #item.actions="{ item }">
-          <v-btn color="red" @click="deleteUser(item.id)" size="small">Sil</v-btn>
+          <v-btn color="red" @click="deleteRecord(item.id)" size="small">Sil</v-btn>
         </template>
       </v-data-table>
     </div>
@@ -34,7 +34,7 @@
       <p>{{ user.email }}</p>
       <p>{{ user.email_verified_at }}</p> -->
       <!-- <p>Kayıt: {{ new Date(user.created_at).toLocaleDateString('tr-TR') }}</p> -->
-      <!-- <v-btn @click="deleteUser(user.id)">Sil</v-btn> -->
+      <!-- <v-btn @click="deleteRecord(user.id)">Sil</v-btn> -->
     </div>
 
     <div v-if="pending">Yükleniyor...</div>
@@ -50,15 +50,15 @@
 </template>
 
 <script setup lang="ts">
-const { getUsers, deleteUser: removeUser } = useUsers()
+const { getCustomers, deleteCustomer: removeUser } = useCustomers()
 
-const { data: users, pending, error, refresh } = await useAsyncData('users', getUsers)
+const { data: users, pending, error, refresh } = await useAsyncData('users', getCustomers)
 
 const refresh2 = async () => {
   await refresh()
 }
 
-const deleteUser = async (id: number) => {
+const deleteRecord = async (id: number) => {
   
   if (!confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?')) {
     return

@@ -11,9 +11,9 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const result = await executeQuery('DELETE FROM users WHERE id = ?', [id])
-    
-    if ((result as any).affectedRows === 0) {
+    const cari = await executeQuery('SELECT * FROM cari WHERE id = ?', [id])
+
+    if (!Array.isArray(cari) || cari.length === 0) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Kullanıcı bulunamadı'
@@ -22,14 +22,14 @@ export default defineEventHandler(async (event) => {
 
     return {
       success: true,
-      message: 'Kullanıcı başarıyla silindi'
+      data: cari[0]
     }
   } catch (error) {
     if (error.statusCode) throw error
     
     throw createError({
       statusCode: 500,
-      statusMessage: 'Kullanıcı silinirken hata oluştu'
+      statusMessage: 'Kullanıcı getirilirken hata oluştu'
     })
   }
 })

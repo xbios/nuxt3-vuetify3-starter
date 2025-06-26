@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   // Vite yapılandırması
   vite: {
     define: {
-      'process.env.DEBUG': false,
+      'process.env.DEBUG': true,
     },
     css: {
       preprocessorOptions: {

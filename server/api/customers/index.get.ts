@@ -2,11 +2,11 @@ import { executeQuery } from '~/utils/database'
 
 export default defineEventHandler(async (event) => {
   try {
-    const users = await executeQuery('SELECT * FROM users ORDER BY created_at DESC')
+    const cari = await executeQuery('SELECT * FROM cari ORDER BY created_at DESC')
     
     return {
       success: true,
-      data: users
+      data: cari
     }
   } catch (error) {
     throw createError({

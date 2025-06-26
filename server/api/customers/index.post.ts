@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   try {
     // Email kontrolü
     const existingUsers = await executeQuery(
-      'SELECT id FROM users WHERE email = ?', 
+      'SELECT id FROM cari WHERE email = ?', 
       [body.email]
     )
     
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
     // Yeni kullanıcı ekleme
     const result = await executeQuery(
-      'INSERT INTO users (name, email, password, created_at) VALUES (?, ?, ?, NOW())',
+      'INSERT INTO cari (name, email, password, created_at) VALUES (?, ?, ?, NOW())',
       [body.name, body.email, body.password]
     )
 

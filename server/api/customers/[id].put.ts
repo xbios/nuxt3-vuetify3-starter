@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Kullanıcı var mı kontrol et
-    const existingUsers = await executeQuery('SELECT id FROM users WHERE id = ?', [id])
+    const existingUsers = await executeQuery('SELECT id FROM cari WHERE id = ?', [id])
     
     if (!Array.isArray(existingUsers) || existingUsers.length === 0) {
       throw createError({
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     updateValues.push(id)
 
     await executeQuery(
-      `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`,
+      `UPDATE cari SET ${updateFields.join(', ')} WHERE id = ?`,
       updateValues
     )
 
