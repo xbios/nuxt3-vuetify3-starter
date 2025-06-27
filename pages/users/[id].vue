@@ -258,85 +258,92 @@ const snackbar = reactive({
 })
 
 // Mock users data (normally would come from API)
-const mockUsers = [
-  {
-    id: 1,
-    name: 'Ahmet Yılmaz',
-    email: 'ahmet.yilmaz@example.com',
-    phone: '+90 532 123 4567',
-    department: 'Yazılım Geliştirme',
-    status: 'Aktif',
-    joinDate: '15.03.2023',
-    lastLogin: '2024-01-15T10:30:00',
-    accountType: 'Admin',
-    permissions: ['Admin', 'Kullanıcı', 'Editör']
-  },
-  {
-    id: 2,
-    name: 'Ayşe Kara',
-    email: 'ayse.kara@example.com',
-    phone: '+90 533 234 5678',
-    department: 'İnsan Kaynakları',
-    status: 'Aktif',
-    joinDate: '22.05.2023',
-    lastLogin: '2024-01-14T16:45:00',
-    accountType: 'Standart',
-    permissions: ['Kullanıcı']
-  },
-  {
-    id: 3,
-    name: 'Mehmet Demir',
-    email: 'mehmet.demir@example.com',
-    phone: '+90 534 345 6789',
-    department: 'Muhasebe',
-    status: 'Pasif',
-    joinDate: '08.01.2023',
-    lastLogin: '2023-12-20T09:15:00',
-    accountType: 'Standart',
-    permissions: ['Kullanıcı']
-  },
-  {
-    id: 4,
-    name: 'Fatma Çelik',
-    email: 'fatma.celik@example.com',
-    phone: '+90 535 456 7890',
-    department: 'Pazarlama',
-    status: 'Aktif',
-    joinDate: '12.07.2023',
-    lastLogin: '2024-01-16T14:20:00',
-    accountType: 'Editör',
-    permissions: ['Kullanıcı', 'Editör']
-  },
-  {
-    id: 5,
-    name: 'Ali Şahin',
-    email: 'ali.sahin@example.com',
-    phone: '+90 536 567 8901',
-    department: 'Satış',
-    status: 'Aktif',
-    joinDate: '30.09.2023',
-    lastLogin: '2024-01-16T11:00:00',
-    accountType: 'Standart',
-    permissions: ['Kullanıcı']
-  }
-]
+// const mockUsers = [
+//   {
+//     id: 1,
+//     name: 'Ahmet Yılmaz',
+//     email: 'ahmet.yilmaz@example.com',
+//     phone: '+90 532 123 4567',
+//     department: 'Yazılım Geliştirme',
+//     status: 'Aktif',
+//     joinDate: '15.03.2023',
+//     lastLogin: '2024-01-15T10:30:00',
+//     accountType: 'Admin',
+//     permissions: ['Admin', 'Kullanıcı', 'Editör']
+//   },
+//   {
+//     id: 2,
+//     name: 'Ayşe Kara',
+//     email: 'ayse.kara@example.com',
+//     phone: '+90 533 234 5678',
+//     department: 'İnsan Kaynakları',
+//     status: 'Aktif',
+//     joinDate: '22.05.2023',
+//     lastLogin: '2024-01-14T16:45:00',
+//     accountType: 'Standart',
+//     permissions: ['Kullanıcı']
+//   },
+//   {
+//     id: 3,
+//     name: 'Mehmet Demir',
+//     email: 'mehmet.demir@example.com',
+//     phone: '+90 534 345 6789',
+//     department: 'Muhasebe',
+//     status: 'Pasif',
+//     joinDate: '08.01.2023',
+//     lastLogin: '2023-12-20T09:15:00',
+//     accountType: 'Standart',
+//     permissions: ['Kullanıcı']
+//   },
+//   {
+//     id: 4,
+//     name: 'Fatma Çelik',
+//     email: 'fatma.celik@example.com',
+//     phone: '+90 535 456 7890',
+//     department: 'Pazarlama',
+//     status: 'Aktif',
+//     joinDate: '12.07.2023',
+//     lastLogin: '2024-01-16T14:20:00',
+//     accountType: 'Editör',
+//     permissions: ['Kullanıcı', 'Editör']
+//   },
+//   {
+//     id: 7,
+//     name: 'Ali Şahin',
+//     email: 'ali.sahin@example.com',
+//     phone: '+90 536 567 8901',
+//     department: 'Satış',
+//     status: 'Aktif',
+//     joinDate: '30.09.2023',
+//     lastLogin: '2024-01-16T11:00:00',
+//     accountType: 'Standart',
+//     permissions: ['Kullanıcı']
+//   }
+// ]
+
+
+const { fetchUser } = useUsers()
+
+const { data: user, pending, error,refresh } = await useAsyncData('user', () => fetchUser(userId))
+
+//console.log('User Data:', user)
 
 // Simulate API call with composable
-const { data: user, pending, error } = await useLazyAsyncData(
-  `user-${userId}`,
-  () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const foundUser = mockUsers.find(u => u.id === userId)
-        if (foundUser) {
-          resolve(foundUser)
-        } else {
-          reject(new Error('User not found'))
-        }
-      }, 1000) // Simulate loading time
-    })
-  }
-)
+// const { data: user, pending, error } = await useLazyAsyncData(
+//   `user-${userId}`,
+//   () => {
+//     return new Promise((resolve, reject) => {
+//       setTimeout(() => {
+//         const foundUser = mockUsers.find(u => u.id === userId)
+//         if (foundUser) {
+//           resolve(foundUser)
+//         } else {
+//           reject(new Error('User not found'))
+//         }
+//       }, 1000) // Simulate loading time
+//     })
+//   }
+// )
 
 // Methods
 const editUser = () => {

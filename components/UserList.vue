@@ -54,6 +54,7 @@ const { getCustomers, deleteCustomer: removeUser } = useCustomers()
 
 const { data: users, pending, error, refresh } = await useAsyncData('users', getCustomers)
 
+
 const refresh2 = async () => {
   await refresh()
 }

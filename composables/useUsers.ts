@@ -1,15 +1,15 @@
 // composables/useUsers.ts
 export interface User {
-  id: number
-  name: string
-  email: string
-  phone: string
-  department: string
-  status: 'Aktif' | 'Pasif'
-  joinDate: string
-  lastLogin?: string
-  accountType?: string
-  permissions?: string[]
+  // id: number
+  // name: string
+  // email: string
+  // phone: string
+  // department: string
+  // status: 'Aktif' | 'Pasif'
+  // joinDate: string
+  // lastLogin?: string
+  // accountType?: string
+  // permissions?: string[]
 }
 
 export interface UserFormData {
@@ -22,91 +22,104 @@ export interface UserFormData {
 
 export const useUsers = () => {
   // Mock data - replace with actual API calls
-  const mockUsers: User[] = [
-    {
-      id: 1,
-      name: 'Ahmet Yılmaz',
-      email: 'ahmet.yilmaz@example.com',
-      phone: '+90 532 123 4567',
-      department: 'Yazılım Geliştirme',
-      status: 'Aktif',
-      joinDate: '15.03.2023',
-      lastLogin: '2024-01-15T10:30:00',
-      accountType: 'Admin',
-      permissions: ['Admin', 'Kullanıcı', 'Editör']
-    },
-    {
-      id: 2,
-      name: 'Ayşe Kara',
-      email: 'ayse.kara@example.com',
-      phone: '+90 533 234 5678',
-      department: 'İnsan Kaynakları',
-      status: 'Aktif',
-      joinDate: '22.05.2023',
-      lastLogin: '2024-01-14T16:45:00',
-      accountType: 'Standart',
-      permissions: ['Kullanıcı']
-    },
-    {
-      id: 3,
-      name: 'Mehmet Demir',
-      email: 'mehmet.demir@example.com',
-      phone: '+90 534 345 6789',
-      department: 'Muhasebe',
-      status: 'Pasif',
-      joinDate: '08.01.2023',
-      lastLogin: '2023-12-20T09:15:00',
-      accountType: 'Standart',
-      permissions: ['Kullanıcı']
-    },
-    {
-      id: 4,
-      name: 'Fatma Çelik',
-      email: 'fatma.celik@example.com',
-      phone: '+90 535 456 7890',
-      department: 'Pazarlama',
-      status: 'Aktif',
-      joinDate: '12.07.2023',
-      lastLogin: '2024-01-16T14:20:00',
-      accountType: 'Editör',
-      permissions: ['Kullanıcı', 'Editör']
-    },
-    {
-      id: 5,
-      name: 'Ali Şahin',
-      email: 'ali.sahin@example.com',
-      phone: '+90 536 567 8901',
-      department: 'Satış',
-      status: 'Aktif',
-      joinDate: '30.09.2023',
-      lastLogin: '2024-01-16T11:00:00',
-      accountType: 'Standart',
-      permissions: ['Kullanıcı']
-    }
-  ]
+  // const mockUsers: User[] = [
+  //   {
+  //     id: 1,
+  //     name: 'Ahmet Yılmaz Akın',
+  //     email: 'ahmet.yilmaz@example.com',
+  //     phone: '+90 532 123 4567',
+  //     department: 'Yazılım Geliştirme',
+  //     status: 'Aktif',
+  //     joinDate: '15.03.2023',
+  //     lastLogin: '2024-01-15T10:30:00',
+  //     accountType: 'Admin',
+  //     permissions: ['Admin', 'Kullanıcı', 'Editör','Guest']
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Ayşe Kara',
+  //     email: 'ayse.kara@example.com',
+  //     phone: '+90 533 234 5678',
+  //     department: 'İnsan Kaynakları',
+  //     status: 'Aktif',
+  //     joinDate: '22.05.2023',
+  //     lastLogin: '2024-01-14T16:45:00',
+  //     accountType: 'Standart',
+  //     permissions: ['Kullanıcı']
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Mehmet Demir',
+  //     email: 'mehmet.demir@example.com',
+  //     phone: '+90 534 345 6789',
+  //     department: 'Muhasebe',
+  //     status: 'Pasif',
+  //     joinDate: '08.01.2023',
+  //     lastLogin: '2023-12-20T09:15:00',
+  //     accountType: 'Standart',
+  //     permissions: ['Kullanıcı']
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Fatma Çelik',
+  //     email: 'fatma.celik@example.com',
+  //     phone: '+90 535 456 7890',
+  //     department: 'Pazarlama',
+  //     status: 'Aktif',
+  //     joinDate: '12.07.2023',
+  //     lastLogin: '2024-01-16T14:20:00',
+  //     accountType: 'Editör',
+  //     permissions: ['Kullanıcı', 'Editör']
+  //   },
+  //   {
+  //     id: 5,
+  //     name: 'Ali Şahin',
+  //     email: 'ali.sahin@example.com',
+  //     phone: '+90 536 567 8901',
+  //     department: 'Satış',
+  //     status: 'Aktif',
+  //     joinDate: '30.09.2023',
+  //     lastLogin: '2024-01-16T11:00:00',
+  //     accountType: 'Standart',
+  //     permissions: ['Kullanıcı']
+  //   }
+  // ]
 
+  
   // Fetch all users
+  // const fetchUsers = async (): Promise<User[]> => {
+  //   // Simulate API call    
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve([...mockUsers])
+  //     }, 500)
+  //   })
+  // }
+
   const fetchUsers = async (): Promise<User[]> => {
-    // Simulate API call
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([...mockUsers])
-      }, 500)
-    })
+     const { data } = await $fetch<ApiResponse<User[]>>('/api/customers')
+    return data || []
   }
 
   // Fetch single user by ID
   const fetchUser = async (id: number): Promise<User | null> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = mockUsers.find(u => u.id === id)
-        if (user) {
-          resolve({ ...user })
-        } else {
-          reject(new Error('User not found'))
-        }
-      }, 500)
-    })
+    try {
+      const { data } = await $fetch<ApiResponse<User>>(`/api/customers/${id}`)
+      return data || null
+    } catch (error) {
+      console.error('Kullanıcı getirme hatası:', error)
+      return null
+    }
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     const user = mockUsers.find(u => u.id === id)
+    //     if (user) {
+    //       resolve({ ...user })
+    //     } else {
+    //       reject(new Error('User not found'))
+    //     }
+    //   }, 500)
+    // })
   }
 
   // Create new user

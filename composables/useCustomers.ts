@@ -18,6 +18,17 @@ export const useCustomers = () => {
     return data || []
   }
 
+  // Axios ile aynı işlev
+  const getCustomers2 = async (): Promise<Customer[]> => {
+    try {
+      const response = await axios.get<ApiResponse<Customer[]>>('/api/customers')
+      return response.data.data || []
+    } catch (error) {
+      console.error('Müşteriler alınırken hata oluştu:', error)
+      return []
+    }
+  }
+
   const getCustomer = async (id: number): Promise<Customer | null> => {
     try {
       const { data } = await $fetch<ApiResponse<Customer>>(`/api/customers/${id}`)

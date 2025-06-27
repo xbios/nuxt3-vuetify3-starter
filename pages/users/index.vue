@@ -15,9 +15,13 @@
                 <v-icon color="primary" size="32" class="mr-3">mdi-account-group</v-icon>
                 <h2 class="text-h4 font-weight-bold text-primary">Kullanıcı Listesi</h2>
               </div>
+              <v-divider vertical class="mx-4" />
+                <div class="d-flex align-center" style="margin-left:auto;">
+                <v-btn class="ma-2" color="primary" size="small" @click="refresh2">Yenile</v-btn>
+                </div>
               <v-btn 
                 color="success" 
-                size="large" 
+                size="small"                 
                 prepend-icon="mdi-plus"
                 @click="openAddDialog"
                 class="px-6"
@@ -278,56 +282,67 @@ const rules = {
 }
 
 // Users Data (normally would come from API)
-const users = ref([
-  {
-    id: 1,
-    name: 'Ahmet Yılmaz',
-    email: 'ahmet.yilmaz@example.com',
-    phone: '+90 532 123 4567',
-    department: 'Yazılım Geliştirme',
-    status: 'Aktif',
-    joinDate: '15.03.2023'
-  },
-  {
-    id: 2,
-    name: 'Ayşe Kara',
-    email: 'ayse.kara@example.com',
-    phone: '+90 533 234 5678',
-    department: 'İnsan Kaynakları',
-    status: 'Aktif',
-    joinDate: '22.05.2023'
-  },
-  {
-    id: 3,
-    name: 'Mehmet Demir',
-    email: 'mehmet.demir@example.com',
-    phone: '+90 534 345 6789',
-    department: 'Muhasebe',
-    status: 'Pasif',
-    joinDate: '08.01.2023'
-  },
-  {
-    id: 4,
-    name: 'Fatma Çelik',
-    email: 'fatma.celik@example.com',
-    phone: '+90 535 456 7890',
-    department: 'Pazarlama',
-    status: 'Aktif',
-    joinDate: '12.07.2023'
-  },
-  {
-    id: 5,
-    name: 'Ali Şahin',
-    email: 'ali.sahin@example.com',
-    phone: '+90 536 567 8901',
-    department: 'Satış',
-    status: 'Aktif',
-    joinDate: '30.09.2023'
-  }
-])
+// const users = ref([
+//   {
+//     id: 1,
+//     name: 'Ahmet Yılmaz',
+//     email: 'ahmet.yilmaz@example.com',
+//     phone: '+90 532 123 4567',
+//     department: 'Yazılım Geliştirme',
+//     status: 'Aktif',
+//     joinDate: '15.03.2023'
+//   },
+//   {
+//     id: 2,
+//     name: 'Ayşe Kara',
+//     email: 'ayse.kara@example.com',
+//     phone: '+90 533 234 5678',
+//     department: 'İnsan Kaynakları',
+//     status: 'Aktif',
+//     joinDate: '22.05.2023'
+//   },
+//   {
+//     id: 3,
+//     name: 'Mehmet Demir',
+//     email: 'mehmet.demir@example.com',
+//     phone: '+90 534 345 6789',
+//     department: 'Muhasebe',
+//     status: 'Pasif',
+//     joinDate: '08.01.2023'
+//   },
+//   {
+//     id: 4,
+//     name: 'Fatma Çelik',
+//     email: 'fatma.celik@example.com',
+//     phone: '+90 535 456 7890',
+//     department: 'Pazarlama',
+//     status: 'Aktif',
+//     joinDate: '12.07.2023'
+//   },
+//   {
+//     id: 5,
+//     name: 'Ali Şahin',
+//     email: 'ali.sahin@example.com',
+//     phone: '+90 536 567 8901',
+//     department: 'Satış',
+//     status: 'Aktif',
+//     joinDate: '30.09.2023'
+//   }
+// ])
+
+const { fetchUsers } = useUsers()
+
+const { data: users, pending, error, refresh } = await useAsyncData('users', fetchUsers)
+
+
+
+const refresh2 = async () => {
+  //console.log(JSON.stringify(users.value,null,2))
+  await refresh()
+}
 
 // Methods
-const viewUser = (user) => {
+const viewUser = (user) => {  
   navigateTo(`/users/${user.id}`)
 }
 
