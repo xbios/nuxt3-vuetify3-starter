@@ -34,7 +34,7 @@ const tableSchemas = {
 
 export default defineEventHandler(async (event) => {
 
-  console.log(' params crud:', event.context.params)
+  console.log(' params index:', event.context.params)
 
   const method = getMethod(event)
   const params = getRouterParams(event)
@@ -54,26 +54,11 @@ export default defineEventHandler(async (event) => {
   let connection
   
   try {
-    //connection = await mysql.createConnection(dbConfig)
-
     //connection = await connectToDatabase()
-
-    
     
     switch (method) {
       case 'GET':  
         return await handleGet(connection, tableName, resourceId, query)
-      
-      case 'POST':
-        const postBody = await readBody(event)
-        return await handlePost(connection, tableName, postBody)
-      
-      case 'PUT':
-        const putBody = await readBody(event)
-        return await handlePut(connection, tableName, resourceId, putBody)
-      
-      case 'DELETE':
-        return await handleDelete(connection, tableName, resourceId)
       
       default:
         throw createError({
@@ -97,19 +82,16 @@ export default defineEventHandler(async (event) => {
 // GET işlemleri
 async function handleGet(connection: any, table: string, id?: string, query?: any) {
   if (id) {    
-    console.log(' table:', table, 'with id:', id)
-    // // Tek kayıt getir
-    const rows = await executeQuery(
-      `SELECT * FROM ${table} WHERE id = ?`,
-      [id]
-    )     
-    return rows[0] || null
+    // console.log(' table:', table, 'with id:', id)
+    // // // Tek kayıt getir
+    // const [rows] = await connection.execute(
+    //   `SELECT * FROM ${table} WHERE id = ?`,
+    //   [id]
+    // )     
+    // return rows[0] || null
      
   } else {
-
-    return {
-      success: true     
-    }
+  
 
     // Tüm kayıtları getir (pagination ve filtering ile)
     let sql = `SELECT * FROM ${table}`
@@ -149,53 +131,4 @@ async function handleGet(connection: any, table: string, id?: string, query?: an
     return rows
   
   }
-}
-
-// POST işlemleri
-async function handlePost(connection: any, table: string, data: any) {
-  const fields = Object.keys(data).join(', ')
-  const placeholders = Object.keys(data).map(() => '?').join(', ')
-  const values = Object.values(data)
-  
-  const [result] = await connection.execute(
-    `INSERT INTO ${table} (${fields}) VALUES (${placeholders})`,
-    values
-  )
-  
-  // Yeni oluşturulan kaydı döndür
-  const [newRecord] = await connection.execute(
-    `SELECT * FROM ${table} WHERE id = ?`,
-    [(result as any).insertId]
-  )
-  
-  return newRecord[0]
-}
-
-// PUT işlemleri
-async function handlePut(connection: any, table: string, id: string, data: any) {
-  const fields = Object.keys(data).map(key => `${key} = ?`).join(', ')
-  const values = [...Object.values(data), id]
-  
-  await connection.execute(
-    `UPDATE ${table} SET ${fields} WHERE id = ?`,
-    values
-  )
-  
-  // Güncellenmiş kaydı döndür
-  const [updatedRecord] = await connection.execute(
-    `SELECT * FROM ${table} WHERE id = ?`,
-    [id]
-  )
-  
-  return updatedRecord[0]
-}
-
-// DELETE işlemleri
-async function handleDelete(connection: any, table: string, id: string) {
-  const [result] = await connection.execute(
-    `DELETE FROM ${table} WHERE id = ?`,
-    [id]
-  )
-  
-  return { success: true, affected: (result as any).affectedRows }
 }

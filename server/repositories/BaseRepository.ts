@@ -1,6 +1,3 @@
-// Advanced: Repository Pattern için
-// server/repositories/BaseRepository.ts
-
 export abstract class BaseRepository<T = any> {
   protected connection: any
   protected tableName: string

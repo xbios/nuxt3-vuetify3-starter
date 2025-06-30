@@ -330,20 +330,28 @@ const rules = {
 //   }
 // ])
 
-const { fetchUsers } = useUsers()
+//const { fetchUsers } = useUsers()
 
-const { data: users, pending, error, refresh } = await useAsyncData('users', fetchUsers)
+//const { data: users, pending, error, refresh } = await useAsyncData('users', fetchUsers)
 
+
+
+const userApi = useTableApi('cari')
+const users = await userApi.getAll()
+let user = ref({})
 
 
 const refresh2 = async () => {
-  //console.log(JSON.stringify(users.value,null,2))
-  await refresh()
+  // Kullanım örneği component'te:
+  user = await userApi.getById(7)
+  console.log(JSON.stringify(users2,null,2))
+  // const newUser = await userApi.create({ name: 'John', email: 'john@email.com' })
+
 }
 
 // Methods
 const viewUser = (user) => {  
-  navigateTo(`/users/${user.id}`)
+  navigateTo(`/kull/${user.id}`)
 }
 
 const editUser = (user) => {

@@ -37,7 +37,7 @@ export default defineNuxtConfig({
     dbPort: process.env.DB_PORT || 3306,
     dbUser: process.env.DB_USER || 'root',
     dbPassword: process.env.DB_PASSWORD || '',
-    dbName: process.env.DB_NAME || 'self_db',
+    dbName: process.env.DB_NAME || 'proje_db',
     // Public keys (exposed to client-side)
     public: {
       apiBase: '/api'

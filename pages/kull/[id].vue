@@ -19,7 +19,7 @@
             <v-icon color="error" size="64" class="mb-4">mdi-alert-circle</v-icon>
             <h2 class="text-h5 mb-4">Kullanıcı Bulunamadı</h2>
             <p class="text-body-1 mb-4">Aradığınız kullanıcı mevcut değil veya erişim izniniz yok.</p>
-            <v-btn color="primary" @click="$router.push('/users')">
+            <v-btn color="primary" @click="$router.push('/kull')">
               Kullanıcı Listesine Dön
             </v-btn>
           </v-card>
@@ -33,7 +33,7 @@
                   icon="mdi-arrow-left" 
                   color="primary" 
                   variant="tonal"
-                  @click="$router.push('/users')"
+                  @click="$router.push('/kull')"
                   class="mr-4"
                 >
                   <v-icon>mdi-arrow-left</v-icon>
@@ -322,9 +322,12 @@ const snackbar = reactive({
 // ]
 
 
-const { fetchUser } = useUsers()
+//const { fetchUser } = useUsers()
+//const { data: user, pending, error,refresh } = await useAsyncData('user', () => fetchUser(userId))
 
-const { data: user, pending, error,refresh } = await useAsyncData('user', () => fetchUser(userId))
+const userApi = useTableApi('cari')
+const user = await userApi.getById(userId)
+
 
 //console.log('User Data:', user)
 

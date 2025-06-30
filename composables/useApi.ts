@@ -1,6 +1,3 @@
-// Composable approach için
-// composables/useApi.ts
-
 export const useTableApi = (tableName: string) => {
   const baseUrl = `/api/${tableName}`
   

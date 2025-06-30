@@ -1,6 +1,3 @@
-// Alternative: Class-based approach için ayrı dosya
-// server/utils/CrudController.ts
-
 export class CrudController {
   private connection: any
   private tableName: string

@@ -97,7 +97,7 @@ export const useUsers = () => {
   // }
 
   const fetchUsers = async (): Promise<User[]> => {
-     const { data } = await $fetch<ApiResponse<User[]>>('/api/customers')
+     const { data } = await $fetch<ApiResponse<User[]>>('/api/cari')
     return data || []
   }
 

@@ -14,7 +14,7 @@ interface ApiResponse<T> {
 
 export const useCustomers = () => {
   const getCustomers = async (): Promise<Customer[]> => {
-    const { data } = await $fetch<ApiResponse<Customer[]>>('/api/customers')
+    const { data } = await $fetch<ApiResponse<Customer[]>>('/api/cari')
     return data || []
   }
 
