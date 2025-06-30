@@ -338,13 +338,13 @@ const rules = {
 
 const userApi = useTableApi('cari')
 const users = await userApi.getAll()
-let user = ref({})
 
+let user = ref({})
 
 const refresh2 = async () => {
   // Kullanım örneği component'te:
-  user = await userApi.getById(7)
-  console.log(JSON.stringify(users2,null,2))
+  user.value = await userApi.getById(1)
+  console.log(JSON.stringify(user.value,null,2))
   // const newUser = await userApi.create({ name: 'John', email: 'john@email.com' })
 
 }
