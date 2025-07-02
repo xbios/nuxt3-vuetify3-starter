@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- Page Title -->
+
     <Head>
       <Title>{{ user?.name || 'Kullanıcı Detayı' }} - Yönetim Paneli</Title>
     </Head>
@@ -29,35 +30,21 @@
             <!-- Header -->
             <v-card-title class="table-header d-flex justify-space-between align-center pa-6">
               <div class="d-flex align-center">
-                <v-btn 
-                  icon="mdi-arrow-left" 
-                  color="primary" 
-                  variant="tonal"
-                  @click="$router.push('/kull')"
-                  class="mr-4"
-                >
+                <v-btn icon="mdi-arrow-left" color="primary" variant="tonal" @click="$router.push('/kull')"
+                  class="mr-4">
                   <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
                 <h2 class="text-h4 font-weight-bold text-primary">Kullanıcı Detayı</h2>
               </div>
               <div class="d-flex gap-2">
-                <v-btn 
-                  color="warning" 
-                  prepend-icon="mdi-pencil"
-                  @click="editUser"
-                  class="px-6"
-                  elevation="2"
-                >
+                <div class="d-flex align-center" style="margin-left:auto;">
+                  <v-btn class="px-6" color="primary" @click="refresh2">Yenile</v-btn>
+                </div>
+                <v-btn color="warning" prepend-icon="mdi-pencil" @click="editUser" class="px-6" elevation="2">
                   Düzenle
                 </v-btn>
-                <v-btn 
-                  color="error" 
-                  prepend-icon="mdi-delete"
-                  @click="deleteUser"
-                  class="px-6"
-                  elevation="2"
-                  variant="outlined"
-                >
+                <v-btn color="error" prepend-icon="mdi-delete" @click="deleteUser" class="px-6" elevation="2"
+                  variant="outlined">
                   Sil
                 </v-btn>
               </div>
@@ -66,41 +53,66 @@
             <!-- Content -->
             <v-card-text class="pa-6">
               <v-row>
+                <v-col cols="12" style="background-color: #f5f5f5;">
+                  <!-- form -->
+                  <v-card>
+                    <v-card-title class="text-h6">
+                      {{ editMode ? 'Kullanıcı Düzenle' : 'Yeni Kullanıcı Ekle' }}
+                    </v-card-title>
+                    <v-card-text>
+                      <v-form ref="form" v-model="formValid">
+                        <v-row>
+                          <v-col cols="12" sm="6">
+                            <v-text-field v-model="user.name" label="Ad Soyad" :rules="[rules.required]"
+                              variant="outlined" />
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-text-field v-model="user.email" label="E-posta" type="email"
+                              :rules="[rules.required, rules.email]" variant="outlined" />
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-text-field v-model="user.phone" label="Telefon" :rules="[rules.required]"
+                              variant="outlined" />
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-select v-model="user.department" :items="departments" label="Departman"
+                              :rules="[rules.required]" variant="outlined" />
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-select v-model="user.status" :items="statusOptions" label="Durum"
+                              :rules="[rules.required]" variant="outlined" />
+                          </v-col>
+                        </v-row>
+                      </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer />
+                      <v-btn color="grey" variant="text" @click="closeForm">İptal</v-btn>
+                      <v-btn color="primary" variant="tonal" @click="saveUser" :disabled="!formValid">
+                        {{ editMode ? 'Güncelle' : 'Kaydet' }}
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                  <!-- form -->
+                </v-col>
+              </v-row>
+              <v-row>
                 <!-- Profile Section -->
                 <v-col cols="12" md="4" class="text-center">
-                  <v-avatar 
-                    size="150" 
-                    class="mb-4"
-                    color="primary"
-                  >
+                  <v-avatar size="150" class="mb-4" color="primary">
                     <v-icon size="80" color="white">mdi-account</v-icon>
                   </v-avatar>
                   <h3 class="text-h5 font-weight-bold mb-2">{{ user.name }}</h3>
-                  <v-chip
-                    :color="user.status === 'Aktif' ? 'success' : 'warning'"
-                    size="large"
-                    class="info-chip mb-4"
-                  >
+                  <v-chip :color="user.status === 'Aktif' ? 'success' : 'warning'" size="large" class="info-chip mb-4">
                     {{ user.status }}
                   </v-chip>
                   <div class="mt-4">
-                    <v-btn
-                      color="primary"
-                      prepend-icon="mdi-email"
-                      :href="`mailto:${user.email}`"
-                      variant="outlined"
-                      class="mb-2"
-                      block
-                    >
+                    <v-btn color="primary" prepend-icon="mdi-email" :href="`mailto:${user.email}`" variant="outlined"
+                      class="mb-2" block>
                       E-posta Gönder
                     </v-btn>
-                    <v-btn
-                      color="success"
-                      prepend-icon="mdi-phone"
-                      :href="`tel:${user.phone}`"
-                      variant="outlined"
-                      block
-                    >
+                    <v-btn color="success" prepend-icon="mdi-phone" :href="`tel:${user.phone}`" variant="outlined"
+                      block>
                       Ara
                     </v-btn>
                   </div>
@@ -172,14 +184,10 @@
                               <strong>Hesap Türü:</strong> {{ user.accountType || 'Standart' }}
                             </div>
                             <div class="mb-3">
-                              <strong>Yetkiler:</strong> 
+                              <strong>Yetkiler:</strong>
                               <v-chip-group>
-                                <v-chip
-                                  v-for="permission in user.permissions || ['Kullanıcı']"
-                                  :key="permission"
-                                  size="small"
-                                  color="info"
-                                >
+                                <v-chip v-for="permission in user.permissions || ['Kullanıcı']" :key="permission"
+                                  size="small" color="info">
                                   {{ permission }}
                                 </v-chip>
                               </v-chip-group>
@@ -198,19 +206,10 @@
     </v-container>
 
     <!-- Snackbar -->
-    <v-snackbar
-      v-model="snackbar.show"
-      :color="snackbar.color"
-      :timeout="3000"
-      location="top right"
-    >
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="3000" location="top right">
       {{ snackbar.message }}
       <template v-slot:actions>
-        <v-btn
-          color="white"
-          variant="text"
-          @click="snackbar.show = false"
-        >
+        <v-btn color="white" variant="text" @click="snackbar.show = false">
           Kapat
         </v-btn>
       </template>
@@ -243,6 +242,17 @@ const route = useRoute()
 const router = useRouter()
 const userId = parseInt(route.params.id)
 
+const departments = [
+  'Yazılım Geliştirme',
+  'İnsan Kaynakları',
+  'Muhasebe',
+  'Pazarlama',
+  'Satış',
+  'Operasyon'
+]
+
+const statusOptions = ['Aktif', 'Pasif']
+
 // Page Meta
 definePageMeta({
   title: 'Kullanıcı Detayı',
@@ -257,96 +267,26 @@ const snackbar = reactive({
   color: 'success'
 })
 
-// Mock users data (normally would come from API)
-// const mockUsers = [
-//   {
-//     id: 1,
-//     name: 'Ahmet Yılmaz',
-//     email: 'ahmet.yilmaz@example.com',
-//     phone: '+90 532 123 4567',
-//     department: 'Yazılım Geliştirme',
-//     status: 'Aktif',
-//     joinDate: '15.03.2023',
-//     lastLogin: '2024-01-15T10:30:00',
-//     accountType: 'Admin',
-//     permissions: ['Admin', 'Kullanıcı', 'Editör']
-//   },
-//   {
-//     id: 2,
-//     name: 'Ayşe Kara',
-//     email: 'ayse.kara@example.com',
-//     phone: '+90 533 234 5678',
-//     department: 'İnsan Kaynakları',
-//     status: 'Aktif',
-//     joinDate: '22.05.2023',
-//     lastLogin: '2024-01-14T16:45:00',
-//     accountType: 'Standart',
-//     permissions: ['Kullanıcı']
-//   },
-//   {
-//     id: 3,
-//     name: 'Mehmet Demir',
-//     email: 'mehmet.demir@example.com',
-//     phone: '+90 534 345 6789',
-//     department: 'Muhasebe',
-//     status: 'Pasif',
-//     joinDate: '08.01.2023',
-//     lastLogin: '2023-12-20T09:15:00',
-//     accountType: 'Standart',
-//     permissions: ['Kullanıcı']
-//   },
-//   {
-//     id: 4,
-//     name: 'Fatma Çelik',
-//     email: 'fatma.celik@example.com',
-//     phone: '+90 535 456 7890',
-//     department: 'Pazarlama',
-//     status: 'Aktif',
-//     joinDate: '12.07.2023',
-//     lastLogin: '2024-01-16T14:20:00',
-//     accountType: 'Editör',
-//     permissions: ['Kullanıcı', 'Editör']
-//   },
-//   {
-//     id: 7,
-//     name: 'Ali Şahin',
-//     email: 'ali.sahin@example.com',
-//     phone: '+90 536 567 8901',
-//     department: 'Satış',
-//     status: 'Aktif',
-//     joinDate: '30.09.2023',
-//     lastLogin: '2024-01-16T11:00:00',
-//     accountType: 'Standart',
-//     permissions: ['Kullanıcı']
-//   }
-// ]
 
 
-//const { fetchUser } = useUsers()
-//const { data: user, pending, error,refresh } = await useAsyncData('user', () => fetchUser(userId))
-
-const userApi = useTableApi('users')
+const userApi = useTableApi('cari')
 const user = await userApi.getById(userId)
 
 
-//console.log('User Data:', user)
+const refresh2 = async () => {
+  // Kullanım örneği component'te:
+  user.value = await userApi.getById(userId)
+  console.log(JSON.stringify(user.value, null, 2))
+  // const newUser = await userApi.create({ name: 'John', email: 'john@email.com' })
+}
 
-// Simulate API call with composable
-// const { data: user, pending, error } = await useLazyAsyncData(
-//   `user-${userId}`,
-//   () => {
-//     return new Promise((resolve, reject) => {
-//       setTimeout(() => {
-//         const foundUser = mockUsers.find(u => u.id === userId)
-//         if (foundUser) {
-//           resolve(foundUser)
-//         } else {
-//           reject(new Error('User not found'))
-//         }
-//       }, 1000) // Simulate loading time
-//     })
-//   }
-// )
+const rules = {
+  required: value => !!value || 'Bu alan gereklidir',
+  email: value => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return pattern.test(value) || 'Geçerli bir e-posta adresi giriniz'
+  }
+}
 
 // Methods
 const editUser = () => {
@@ -363,7 +303,7 @@ const confirmDelete = () => {
   // Simulate delete API call
   showSnackbar(`${user.value.name} başarıyla silindi`, 'success')
   deleteDialog.value = false
-  
+
   // Navigate back to users list after a short delay
   setTimeout(() => {
     router.push('/users')

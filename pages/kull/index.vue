@@ -25,9 +25,7 @@
     </div>
               </div>
               <v-divider vertical class="mx-4" />
-                <div class="d-flex align-center" style="margin-left:auto;">
-                <v-btn class="ma-2" color="primary" size="small" @click="refresh2">Yenile</v-btn>
-                </div>
+                
               <v-btn 
                 color="success" 
                 size="small"                 
@@ -291,79 +289,20 @@ const rules = {
   }
 }
 
-// Users Data (normally would come from API)
-// const users = ref([
-//   {
-//     id: 1,
-//     name: 'Ahmet Yılmaz',
-//     email: 'ahmet.yilmaz@example.com',
-//     phone: '+90 532 123 4567',
-//     department: 'Yazılım Geliştirme',
-//     status: 'Aktif',
-//     joinDate: '15.03.2023'
-//   },
-//   {
-//     id: 2,
-//     name: 'Ayşe Kara',
-//     email: 'ayse.kara@example.com',
-//     phone: '+90 533 234 5678',
-//     department: 'İnsan Kaynakları',
-//     status: 'Aktif',
-//     joinDate: '22.05.2023'
-//   },
-//   {
-//     id: 3,
-//     name: 'Mehmet Demir',
-//     email: 'mehmet.demir@example.com',
-//     phone: '+90 534 345 6789',
-//     department: 'Muhasebe',
-//     status: 'Pasif',
-//     joinDate: '08.01.2023'
-//   },
-//   {
-//     id: 4,
-//     name: 'Fatma Çelik',
-//     email: 'fatma.celik@example.com',
-//     phone: '+90 535 456 7890',
-//     department: 'Pazarlama',
-//     status: 'Aktif',
-//     joinDate: '12.07.2023'
-//   },
-//   {
-//     id: 5,
-//     name: 'Ali Şahin',
-//     email: 'ali.sahin@example.com',
-//     phone: '+90 536 567 8901',
-//     department: 'Satış',
-//     status: 'Aktif',
-//     joinDate: '30.09.2023'
-//   }
-// ])
-
-//const { fetchUsers } = useUsers()
-//const { data: users, pending, error, refresh } = await useAsyncData('users', fetchUsers)
 
 
-
-const userApi = useTableApi('users')
-
+const userApi = useTableApi('cari')
 const getData = await userApi.getAll()
-const users = getData.Datarows || []
+
+const users = useState('users')
+users.value = getData.Datarows || []
 headers.push(...getData.Fieldnames)
 
 
-let user = ref({})
-
-const refresh2 = async () => {
-  // Kullanım örneği component'te:
-  user.value = await userApi.getById(3)
-  console.log(JSON.stringify(user.value,null,2))
-  // const newUser = await userApi.create({ name: 'John', email: 'john@email.com' })
-
-}
 
 // Methods
 const viewUser = (user) => {  
+  // console.log('Viewing user:', user)
   navigateTo(`/kull/${user.id}`)
 }
 

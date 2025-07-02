@@ -28,6 +28,9 @@ const tableSchemas = {
     name: 'string',
     price: 'number',
     category_id: 'number'
+  },
+  cari: {
+    
   }
   // Diğer tablo şemalarını ekleyin
 }
@@ -41,7 +44,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   
   const tableName = params.table as string
-  const resourceId = params.params?.[0]
+  const resourceId = params.params
   
   // Güvenlik kontrolü
   if (!allowedTables.includes(tableName)) {
