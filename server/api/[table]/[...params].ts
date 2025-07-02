@@ -97,7 +97,7 @@ export default defineEventHandler(async (event) => {
 // GET işlemleri
 async function handleGet(connection: any, table: string, id?: string, query?: any) {
   if (id) {    
-    console.log(' table:', table, 'with id:', id)
+    console.log('id table:', table, ' id:', id)
     // // Tek kayıt getir
     const rows = await executeQuery(
       `SELECT * FROM ${table} WHERE id = ?`,
@@ -107,9 +107,7 @@ async function handleGet(connection: any, table: string, id?: string, query?: an
      
   } else {
 
-    return {
-      success: true     
-    }
+    return rows[0] || null
 
     // Tüm kayıtları getir (pagination ve filtering ile)
     let sql = `SELECT * FROM ${table}`

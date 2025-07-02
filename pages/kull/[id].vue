@@ -325,7 +325,7 @@ const snackbar = reactive({
 //const { fetchUser } = useUsers()
 //const { data: user, pending, error,refresh } = await useAsyncData('user', () => fetchUser(userId))
 
-const userApi = useTableApi('cari')
+const userApi = useTableApi('users')
 const user = await userApi.getById(userId)
 
 

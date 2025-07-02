@@ -4,6 +4,19 @@
        Dialog Aç
     </v-btn>
 
+    <NuxtExample dir="features/state-management">
+    <p>Counter: {{ counter }}</p>
+    <div class="flex gap-2 my-4">
+      <v-btn @click="counter--">
+        -
+      </v-btn>
+      <v-btn @click="counter++">
+        +
+      </v-btn>
+    </div>    
+    <p>Same Counter: {{ sameCounter }}</p>
+  </NuxtExample>
+
     <v-dialog
       v-model="dialog"
       width="auto"
@@ -26,12 +39,9 @@
   </div>
 </template>
 
-<script>
-  export default {
-    data () {
-      return {
-        dialog: false,
-      }
-    },
-  }
+<script setup>
+const dialog = ref(false)
+const loading = ref(false)
+const counter = useState('counter', () => Math.round(Math.random() * 1000))
+const sameCounter = useState('counter')
 </script>

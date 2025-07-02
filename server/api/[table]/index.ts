@@ -88,7 +88,7 @@ async function handleGet(connection: any, table: string, id?: string, query?: an
     //   `SELECT * FROM ${table} WHERE id = ?`,
     //   [id]
     // )     
-    // return rows[0] || null
+    return rows[0] || null
      
   } else {
   
@@ -126,9 +126,18 @@ async function handleGet(connection: any, table: string, id?: string, query?: an
         sql += ` OFFSET ${parseInt(query.offset as string)}`
       }
     }
-    console.log(' table:', table, 'with id:', id)
+    console.log('index -> table:', table, ' id:', id)
     const rows = await executeQuery(sql, params)
-    return rows
+    
+    //return rows
+
+    return {
+      success: true,
+      Datarows: rows || [],
+      Fieldnames: rows.length > 0
+      ? Object.keys(rows[0]).map(key => ({ title: key, key }))
+      : []
+    }
   
   }
 }

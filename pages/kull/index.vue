@@ -13,7 +13,16 @@
             <v-card-title class="table-header d-flex justify-space-between align-center pa-6">
               <div class="d-flex align-center">
                 <v-icon color="primary" size="32" class="mr-3">mdi-account-group</v-icon>
-                <h2 class="text-h4 font-weight-bold text-primary">Kullanıcı Listesi</h2>
+                <h2 class="text-h4 font-weight-bold text-primary">Kullanıcı Listesi   </h2>
+                <p>Same Counter: {{ iCounter }}</p>
+                    <div class="flex gap-2 my-4">
+      <v-btn @click="iCounter--">
+        -
+      </v-btn>
+      <v-btn @click="iCounter++">
+        +
+      </v-btn>
+    </div>
               </div>
               <v-divider vertical class="mx-4" />
                 <div class="d-flex align-center" style="margin-left:auto;">
@@ -235,6 +244,7 @@ const formDialog = ref(false)
 const editMode = ref(false)
 const formValid = ref(false)
 const userToDelete = ref(null)
+const iCounter = useState('counter')
 
 const snackbar = reactive({
   show: false,
@@ -253,12 +263,12 @@ const formData = reactive({
 
 // Static Data
 const headers = [
-  { title: 'ID', key: 'id', width: '80px' },
-  { title: 'Ad Soyad', key: 'name' },
-  { title: 'E-posta', key: 'email' },
-  { title: 'Telefon', key: 'phone' },
-  { title: 'Departman', key: 'department' },
-  { title: 'Durum', key: 'status', width: '120px' },
+  // { title: 'ID', key: 'id', width: '80px' },
+  // { title: 'Ad Soyad', key: 'name' },
+  // { title: 'E-posta', key: 'email' },
+  // { title: 'Telefon', key: 'phone' },
+  // { title: 'Departman', key: 'department' },
+  // { title: 'Durum', key: 'status', width: '120px' },
   { title: 'İşlemler', key: 'actions', sortable: false, width: '180px' }
 ]
 
@@ -331,19 +341,22 @@ const rules = {
 // ])
 
 //const { fetchUsers } = useUsers()
-
 //const { data: users, pending, error, refresh } = await useAsyncData('users', fetchUsers)
 
 
 
-const userApi = useTableApi('cari')
-const users = await userApi.getAll()
+const userApi = useTableApi('users')
+
+const getData = await userApi.getAll()
+const users = getData.Datarows || []
+headers.push(...getData.Fieldnames)
+
 
 let user = ref({})
 
 const refresh2 = async () => {
   // Kullanım örneği component'te:
-  user.value = await userApi.getById(1)
+  user.value = await userApi.getById(3)
   console.log(JSON.stringify(user.value,null,2))
   // const newUser = await userApi.create({ name: 'John', email: 'john@email.com' })
 

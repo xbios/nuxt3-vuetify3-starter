@@ -10,7 +10,7 @@
                         <p class="text-center">
                             Modern web uygulaması geliştirmek için hazır starter proje
                         </p>
-                        <h5>{{ data }}</h5>
+                        
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -71,6 +71,5 @@ useHead({
     title: 'Ana Sayfa - Nuxt 3 + Vuetify 3'
 })
 
-const { data } = await useFetch('/api/hello')
 
 </script>
